@@ -1,23 +1,81 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import Tasks from './components/Tasks';
+import { useState } from 'react';
 
 function App() {
+    const headerTitle = 'Task Tracker';
+    
+    const [tasks, setTasks] = useState(
+        [
+            {
+                id: 1,
+                desc: 'Grocery Shopping',
+                dt: 'Jan 19th @ 7:00 PM',
+                reminder: true,
+                isDeleted: false
+            },
+            {
+                id: 2,
+                desc: 'Complete Online Assessment',
+                dt: 'Jan 19th @ 10:00 AM',
+                reminder: true,
+                isDeleted: false
+            },
+            {
+                id: 3,
+                desc: 'Go through Lec 2 Slides',
+                dt: 'Jan 19th @ 12:00 PM',
+                reminder: true,
+                isDeleted: false
+            },
+            {
+                id: 4,
+                desc: 'Check flights for Montreal Trip',
+                dt: 'Jan 18th @ 10:00 PM',
+                reminder: true,
+                isDeleted: false
+            }
+        ]
+    );
+
+    const handleDelete = (evtObjId) => {
+        console.log('Delete Task Clicked! -- ' + evtObjId);
+        let updatedTasks = [];
+        console.log(tasks);
+        tasks.forEach(t => {
+            updatedTasks.push(
+                { 
+                    ...t, 
+                    isDeleted: (t.id === evtObjId) ? true : t.isDeleted
+                }
+            );
+        });
+        setTasks(updatedTasks);
+    };
+
+    const handleUndelete = (evtObjId) => {
+        console.log('Undelete Task Clicked! -- ' + evtObjId);
+        let updatedTasks = [];
+        console.log(tasks);
+        tasks.forEach(t => {
+            updatedTasks.push(
+                { 
+                    ...t, 
+                    isDeleted: (t.id === evtObjId) ? false : t.isDeleted
+                }
+            );
+        });
+        setTasks(updatedTasks);
+    };
+
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+            <Header title={headerTitle} />
+            <Tasks 
+                taskList={tasks} 
+                onTaskDelete={handleDelete} 
+                onTaskUndelete={handleUndelete}
+            />
         </div>
     );
 }
