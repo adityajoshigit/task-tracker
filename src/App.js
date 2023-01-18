@@ -50,7 +50,7 @@ function App() {
                 }
             );
         });
-        setTasks(updatedTasks);
+        setTasks(updatedTasks.sort(compareTasks));
     };
 
     const handleUndelete = (evtObjId) => {
@@ -65,7 +65,19 @@ function App() {
                 }
             );
         });
-        setTasks(updatedTasks);
+        setTasks(updatedTasks.sort(compareTasks));
+    };
+
+    const compareTasks = (a, b) => {
+        if(a.isDeleted && b.isDeleted) {
+            return (a.id < b.id) ? -1 : 1;
+        } else if(a.isDeleted && !b.isDeleted) {
+            return 1;
+        } else if(!a.isDeleted && b.isDeleted) {
+            return -1;
+        } else {
+            return (a.id < b.id) ? -1 : 1;
+        }
     };
 
     return (
