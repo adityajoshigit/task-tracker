@@ -55,7 +55,6 @@ const Task = ({
     };
 
     const toggleReminderBtn = (boolVal) => {
-        console.log('boolval = ' + boolVal);
         const val = boolVal ? 'block' : 'none';
         setReminderDisplay(val);
     };
@@ -64,11 +63,12 @@ const Task = ({
         let taskData = <></>;
         if (task) {
             taskData = ( 
-                <div className={getTaskClassName()}>
+                <div 
+                    onMouseEnter={ () => toggleReminderBtn(true) }
+                    onMouseLeave={ () => toggleReminderBtn(false) }
+                    className={getTaskClassName()}>
                     
                     <h3 
-                        onMouseEnter={ () => toggleReminderBtn(true) }
-                        onMouseLeave={ () => toggleReminderBtn(false) }
                         className='task-desc'
                         style={ task.isDeleted ? taskCss.deletedTask : {} }
                     >
