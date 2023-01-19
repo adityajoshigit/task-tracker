@@ -1,20 +1,40 @@
 import React from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { FaExchangeAlt } from 'react-icons/fa';
+import { FaTimes, FaExchangeAlt, FaBell, FaBellSlash } from 'react-icons/fa';
+import { useState } from 'react';
+
 const Task = ({
     task,
     onDelete,
-    onUndelete
+    onUndelete,
+    onSetReminder,
+    onResetReminder
 }) => {
 
-    const taskCss = {
+
+    const [reminderDisplay, setReminderDisplay] = useState(
+        ['none']
+    );
+    
+    let taskCss = {
         deletedTask: {
             textDecoration: 'line-through',
             color: 'grey'
         }
     };
-    
-    const showIcon = () => {
+
+    const reminderIcon = () => {
+        return (
+            <span className='reminder-icon' style={ {display: reminderDisplay} }>
+                { 
+                    task.reminder 
+                    ? <FaBellSlash  onClick={onResetReminder} />
+                    : <FaBell onClick={onSetReminder} />
+                }
+            </span>
+        );
+    };
+
+    const showDeleteIcon = () => {
         return (
             task.isDeleted 
             ? <FaExchangeAlt 
@@ -34,16 +54,29 @@ const Task = ({
         );
     };
 
+    const toggleReminderBtn = (boolVal) => {
+        console.log('boolval = ' + boolVal);
+        const val = boolVal ? 'block' : 'none';
+        setReminderDisplay(val);
+    };
+
     const getTaskDetails = () => {
         let taskData = <></>;
         if (task) {
             taskData = ( 
                 <div className={getTaskClassName()}>
+                    
                     <h3 
+                        onMouseEnter={ () => toggleReminderBtn(true) }
+                        onMouseLeave={ () => toggleReminderBtn(false) }
+                        className='task-desc'
                         style={ task.isDeleted ? taskCss.deletedTask : {} }
                     >
-                        {task.desc}
-                        {showIcon()}
+                        <span style={{ display: 'inline-flex' }}>
+                            {reminderIcon()}
+                            {task.desc}
+                        </span>
+                        {showDeleteIcon()}
                     </h3>
                     <p
                         style={ task.isDeleted ? taskCss.deletedTask : {} }
