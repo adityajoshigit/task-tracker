@@ -27,8 +27,8 @@ const Task = ({
             <span className='reminder-icon' style={ {display: reminderDisplay} }>
                 { 
                     task.reminder 
-                    ? <FaBellSlash  onClick={onResetReminder} />
-                    : <FaBell onClick={onSetReminder} />
+                    ? <FaBellSlash  onClick={ () => onResetReminder(task.id) } />
+                    : <FaBell onClick={ () => onSetReminder(task.id) } />
                 }
             </span>
         );

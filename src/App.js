@@ -81,6 +81,21 @@ function App() {
         }
     };
 
+    const toggleReminder = (taskId) => {
+        let updatedTasks = [];
+        tasks.forEach(t => {
+            console.log((taskId === t.id));
+            const upT = !t.isDeleted ? { 
+                ...t, 
+                reminder: (taskId === t.id) ? !t.reminder : t.reminder
+            } : t;
+            updatedTasks.push(
+                upT
+            );
+        });
+        setTasks(updatedTasks);
+    };
+
     return (
         <div className="App">
             <Header title={headerTitle} />
@@ -88,6 +103,8 @@ function App() {
                 taskList={tasks} 
                 onTaskDelete={handleDelete} 
                 onTaskUndelete={handleUndelete}
+                onTaskSetReminder={toggleReminder}
+                onTaskResetReminder={toggleReminder}
             />
         </div>
     );

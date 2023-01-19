@@ -5,7 +5,9 @@ import Task from './Task';
 const Tasks = ({
     taskList,
     onTaskDelete,
-    onTaskUndelete
+    onTaskUndelete,
+    onTaskSetReminder,
+    onTaskResetReminder
 }) => { 
     return (
         <div>
@@ -17,6 +19,8 @@ const Tasks = ({
                                 task={t}
                                 onDelete={onTaskDelete} 
                                 onUndelete={onTaskUndelete}
+                                onSetReminder={onTaskSetReminder}
+                                onResetReminder={onTaskResetReminder}
                             />
                         ) 
                     )
