@@ -28,11 +28,17 @@ const Task = ({
         );
     };
 
+    const getTaskClassName = () => {
+        return (
+            'task ' + ( task.reminder ? 'reminder' : '')
+        );
+    };
+
     const getTaskDetails = () => {
         let taskData = <></>;
         if (task) {
             taskData = ( 
-                <div className='task'>
+                <div className={getTaskClassName()}>
                     <h3 
                         style={ task.isDeleted ? taskCss.deletedTask : {} }
                     >

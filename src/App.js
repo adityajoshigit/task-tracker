@@ -1,3 +1,4 @@
+import './App.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 import { useState } from 'react';
@@ -11,7 +12,7 @@ function App() {
                 id: 1,
                 desc: 'Grocery Shopping',
                 dt: 'Jan 19th @ 7:00 PM',
-                reminder: true,
+                reminder: false,
                 isDeleted: false
             },
             {
@@ -32,7 +33,7 @@ function App() {
                 id: 4,
                 desc: 'Check flights for Montreal Trip',
                 dt: 'Jan 18th @ 10:00 PM',
-                reminder: true,
+                reminder: false,
                 isDeleted: false
             }
         ]
