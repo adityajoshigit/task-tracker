@@ -4,12 +4,13 @@ import { useState } from 'react';
 
 const Task = ({
     task,
-    onDelete,
+    onDelete, 
     onUndelete,
     onSetReminder,
     onResetReminder
 }) => {
 
+    
 
     const [reminderDisplay, setReminderDisplay] = useState(
         ['none']

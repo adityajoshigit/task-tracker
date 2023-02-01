@@ -31,7 +31,7 @@ function App() {
             },
             {
                 id: 4,
-                desc: 'Check flights for Montreal Trip',
+                desc: 'Check flights for US Trip',
                 dt: 'Jan 18th @ 10:00 PM',
                 reminder: false,
                 isDeleted: false
