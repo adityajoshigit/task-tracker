@@ -9,7 +9,7 @@ const Task = ({
     const {
       handleDelete,
       handleUndelete,
-      toggleReminder
+      updateReminder
     } = useContext(TaskContext);
   
     const [reminderDisplay, setReminderDisplay] = useState(
@@ -70,11 +70,11 @@ const Task = ({
     }
     
     const onSetReminder = function () {
-      toggleReminder(task.id);
+      updateReminder(task.id);
     }
     
     const onResetReminder = function () {
-      toggleReminder(task.id);
+        updateReminder(task.id);
     }
     
 

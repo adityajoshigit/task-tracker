@@ -131,9 +131,10 @@ const staticOps = {
       tasks = tasks.map(t => {
         return {
           ...t, 
-          isDeleted: (t.id === taskId) ? true : t.isDeleted
+          isDeleted: (t.id === taskId) ? false : t.isDeleted
         };
       });
+      console.log(tasks);
       setLocal('tasks', tasks);
       return true;
     } catch(err) {

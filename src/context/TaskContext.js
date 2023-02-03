@@ -2,10 +2,10 @@ import { createContext, useState, useEffect } from "react";
 import {
     // isLive,
     getTasks,
-    // postTask,
     deleteTask,
     undeleteTask,
     toggleReminder,
+    postTask,
     // clearTasks
 } from '../services/api';
 
@@ -29,18 +29,37 @@ export const TaskContextProvider = ({
   
   
   const handleDelete = async (evtObjId) => {
-    if(deleteTask(evtObjId)) {
-        const res = await getTasks();
-        setTasks(res.sort(compareTasks));
+    const res = await deleteTask(evtObjId);
+    if(res) {
+        const tasks = await getTasks();
+        setTasks(tasks.sort(compareTasks));
     }
   };
 
   const handleUndelete = async (evtObjId) => {
-    if(undeleteTask(evtObjId)) {
-        const res = await getTasks();
-        setTasks(res.sort(compareTasks));
+    const res = await undeleteTask(evtObjId);
+    if(res) {
+        const tasks = await getTasks();
+        setTasks(tasks.sort(compareTasks));
     }
   };
+
+  const handleAdd = async (newTask) => {
+    if (newTask) {
+        const res = await postTask(newTask);
+        if(res) {
+            const data = await getTasks();
+            setTasks(data);
+        }
+    }
+  };
+
+    const updateReminder = async (taskId) => {
+        if (toggleReminder(taskId)) {
+            const res = await getTasks();
+            setTasks(res.sort(compareTasks));
+        }
+    };
 
   const compareTasks = (a, b) => {
       if(a.isDeleted && b.isDeleted) {
@@ -54,12 +73,6 @@ export const TaskContextProvider = ({
       }
   };
 
-  const updateReminder = async (taskId) => {
-      if (toggleReminder(taskId)) {
-        const res = await getTasks();
-        setTasks(res);
-      }
-  };
 
   return (
     <TaskContext.Provider value={
@@ -68,7 +81,8 @@ export const TaskContextProvider = ({
         tasks,
         handleDelete,
         handleUndelete,
-        updateReminder
+        updateReminder,
+        handleAdd
       }
     }>
       {children}
