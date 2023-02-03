@@ -14,7 +14,7 @@ const Header = ({
             <h1>
                 {title}
             </h1>
-            <Button buttonLabel={btnLabel} />
+            <Button buttonLabel={btnLabel} onAddClick={onAddClick} />
         </header>
     );
 };

@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
 
 const Button = ({
-    buttonLabel
+    buttonLabel,
+    onAddClick
 }) => {
-    const onAddClick = function () {
+    const onBtnClick = function () {
       console.log('Add Clicked..');
+      onAddClick();
     };
     
     return (
         <>
-            <button onClick={onAddClick} className="btn">
+            <button onClick={onBtnClick} className="btn">
                 {buttonLabel}
             </button>
         </>
