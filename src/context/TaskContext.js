@@ -1,4 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import {
+    // isLive,
+    getTasks,
+    // postTask,
+    deleteTask,
+    undeleteTask,
+    toggleReminder,
+    // clearTasks
+} from '../services/api';
 
 const TaskContext = createContext();
 
@@ -7,66 +16,30 @@ export const TaskContextProvider = ({
 }) => {
   const [headerTitle] = 'Task Tracker';
     
-  const [tasks, setTasks] = useState([
-      {
-          id: 1,
-          desc: 'Grocery Shopping',
-          dt: 'Jan 19th @ 7:00 PM',
-          reminder: false,
-          isDeleted: false
-      },
-      {
-          id: 2,
-          desc: 'Complete Online Assessment',
-          dt: 'Jan 19th @ 10:00 AM',
-          reminder: true,
-          isDeleted: false
-      },
-      {
-          id: 3,
-          desc: 'Go through Lec 2 Slides',
-          dt: 'Jan 19th @ 12:00 PM',
-          reminder: true,
-          isDeleted: false
-      },
-      {
-          id: 4,
-          desc: 'Check flights for US Trip',
-          dt: 'Jan 18th @ 10:00 PM',
-          reminder: false,
-          isDeleted: false
-      }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
+  useEffect(() => {
+    const getInitialData = async () => {
+        const res = await getTasks();
+        console.log(res);
+        setTasks(res);
+    };
+    getInitialData();
+  }, []);
   
-  const handleDelete = (evtObjId) => {
-    console.log('Delete Task Clicked! -- ' + evtObjId);
-    let updatedTasks = [];
-    console.log(tasks);
-    tasks.forEach(t => {
-        updatedTasks.push(
-            { 
-                ...t, 
-                isDeleted: (t.id === evtObjId) ? true : t.isDeleted
-            }
-        );
-    });
-    setTasks(updatedTasks.sort(compareTasks));
+  
+  const handleDelete = async (evtObjId) => {
+    if(deleteTask(evtObjId)) {
+        const res = await getTasks();
+        setTasks(res.sort(compareTasks));
+    }
   };
 
-  const handleUndelete = (evtObjId) => {
-      console.log('Undelete Task Clicked! -- ' + evtObjId);
-      let updatedTasks = [];
-      console.log(tasks);
-      tasks.forEach(t => {
-          updatedTasks.push(
-              { 
-                  ...t, 
-                  isDeleted: (t.id === evtObjId) ? false : t.isDeleted
-              }
-          );
-      });
-      setTasks(updatedTasks.sort(compareTasks));
+  const handleUndelete = async (evtObjId) => {
+    if(undeleteTask(evtObjId)) {
+        const res = await getTasks();
+        setTasks(res.sort(compareTasks));
+    }
   };
 
   const compareTasks = (a, b) => {
@@ -81,19 +54,11 @@ export const TaskContextProvider = ({
       }
   };
 
-  const toggleReminder = (taskId) => {
-      let updatedTasks = [];
-      tasks.forEach(t => {
-          console.log((taskId === t.id));
-          const upT = !t.isDeleted ? { 
-              ...t, 
-              reminder: (taskId === t.id) ? !t.reminder : t.reminder
-          } : t;
-          updatedTasks.push(
-              upT
-          );
-      });
-      setTasks(updatedTasks);
+  const updateReminder = async (taskId) => {
+      if (toggleReminder(taskId)) {
+        const res = await getTasks();
+        setTasks(res);
+      }
   };
 
   return (
@@ -103,7 +68,7 @@ export const TaskContextProvider = ({
         tasks,
         handleDelete,
         handleUndelete,
-        toggleReminder
+        updateReminder
       }
     }>
       {children}

@@ -1,18 +1,16 @@
 import './App.css';
-import { useState, useContext } from 'react';
+// import { useState } from 'react';
 import { TaskContextProvider } from './context/TaskContext';
-import TaskContext from './context/TaskContext';
+import TaskList from './components/TaskList';
+import Header from './components/Header';
 
 function App() {
-    
-    const {tasks, headerTitle} = useContext(TaskContext); 
-
+    const headerTitle = 'Task Tracker';
     return (
         <TaskContextProvider>
             <div className="App">
-                <header>
-                    {headerTitle}
-                </header>
+                <Header title={headerTitle} />
+                <TaskList />
             </div>
         </TaskContextProvider>
         
