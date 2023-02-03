@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import Task from './Task';
 import TaskContext from '../context/TaskContext';
 
-const TaskList = ({
-
-}) => { 
+const TaskList = () => { 
     const {
       tasks
     } = useContext(TaskContext);
