@@ -5,6 +5,8 @@ const TaskContext = createContext();
 export const TaskContextProvider = ({
   children
 }) => {
+  const [headerTitle] = 'Task Tracker';
+    
   const [tasks, setTasks] = useState([
       {
           id: 1,
@@ -35,10 +37,73 @@ export const TaskContextProvider = ({
           isDeleted: false
       }
   ]);
+
+  
+  const handleDelete = (evtObjId) => {
+    console.log('Delete Task Clicked! -- ' + evtObjId);
+    let updatedTasks = [];
+    console.log(tasks);
+    tasks.forEach(t => {
+        updatedTasks.push(
+            { 
+                ...t, 
+                isDeleted: (t.id === evtObjId) ? true : t.isDeleted
+            }
+        );
+    });
+    setTasks(updatedTasks.sort(compareTasks));
+  };
+
+  const handleUndelete = (evtObjId) => {
+      console.log('Undelete Task Clicked! -- ' + evtObjId);
+      let updatedTasks = [];
+      console.log(tasks);
+      tasks.forEach(t => {
+          updatedTasks.push(
+              { 
+                  ...t, 
+                  isDeleted: (t.id === evtObjId) ? false : t.isDeleted
+              }
+          );
+      });
+      setTasks(updatedTasks.sort(compareTasks));
+  };
+
+  const compareTasks = (a, b) => {
+      if(a.isDeleted && b.isDeleted) {
+          return (a.id < b.id) ? -1 : 1;
+      } else if(a.isDeleted && !b.isDeleted) {
+          return 1;
+      } else if(!a.isDeleted && b.isDeleted) {
+          return -1;
+      } else {
+          return (a.id < b.id) ? -1 : 1;
+      }
+  };
+
+  const toggleReminder = (taskId) => {
+      let updatedTasks = [];
+      tasks.forEach(t => {
+          console.log((taskId === t.id));
+          const upT = !t.isDeleted ? { 
+              ...t, 
+              reminder: (taskId === t.id) ? !t.reminder : t.reminder
+          } : t;
+          updatedTasks.push(
+              upT
+          );
+      });
+      setTasks(updatedTasks);
+  };
+
   return (
     <TaskContext.Provider value={
       {
-        tasks
+        headerTitle,
+        tasks,
+        handleDelete,
+        handleUndelete,
+        toggleReminder
       }
     }>
       {children}
