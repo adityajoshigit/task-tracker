@@ -9,12 +9,6 @@ function NewTask() {
 
   const [taskDescription, setTaskDescription] = useState('');
 
-  const onSubmit = function (e) {
-    console.log(e);
-    e.preventDefault();
-    sendData();
-  }
-
   const clickHandler = function () {
     sendData();
   }
