@@ -10,8 +10,37 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.parent-container {
+  padding: 1rem;
+}
+
 .App {
   border: 1px solid steelblue;
+  border-radius: 5px;
+  max-height: 90vh;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section-container {
+  padding: 0.25rem;
+}
+
+.task-list-container {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.btn-primary {
+  background-color: steelblue;
+}
+
+.add-form > input {
+  margin: 0.1rem;
+}
+
+.add-form > button {
+  margin: 0.1rem;
 }
 
 /* .container {

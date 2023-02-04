@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import TaskContext from '../context/TaskContext';
+import Reminder from './Reminder';
 
 function NewTask() {
   const {
@@ -9,9 +10,16 @@ function NewTask() {
   const [taskDescription, setTaskDescription] = useState('');
 
   const onSubmit = function (e) {
+    console.log(e);
     e.preventDefault();
-    console.log('submit clicked');
-    console.log(taskDescription);
+    sendData();
+  }
+
+  const clickHandler = function () {
+    sendData();
+  }
+
+  const sendData = function () {
     if (taskDescription) {
       handleAdd({
         desc: taskDescription,
@@ -28,27 +36,23 @@ function NewTask() {
   }
 
   const onDescChange = function (e) {
-    console.log(e.target.value);
     setTaskDescription(e.target.value);
   }
 
   return (
-    <div className='add-form'>
-      <form className='form-control new-task-form' onSubmit={onSubmit}>
-        {/* <label htmlFor="taskDesc" >
-          Add Description
-        </label> */}
+    <div className='d-flex flex-column flex-sm-row align-items-stretch justify-content-between  add-form'>
         <input 
+          className='flex-sm-grow-1 flex-lg-grow-0'
           type="text" 
           name="taskDesc" 
           id="taskDesc" 
           placeholder='Task To Do..'
           onChange={onDescChange}
         />
-        <button type="submit" className='btn'>
+        <Reminder />
+        <button type="button" className='btn btn-primary' onClick={clickHandler}>
           Add
         </button>
-      </form>
     </div>
   )
 }

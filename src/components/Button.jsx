@@ -13,7 +13,7 @@ const Button = ({
         <>
           <button 
             onClick={onBtnClick} 
-            className="btn"
+            className="btn btn-dark"
           >
             {buttonLabel}
           </button>

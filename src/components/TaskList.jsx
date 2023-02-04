@@ -9,7 +9,7 @@ const TaskList = () => {
     } = useContext(TaskContext);
     console.log(tasks);
     return (
-        <div>
+        <div className='task-list-container'>
             <ul>
                 { tasks
                     .map(t => (
