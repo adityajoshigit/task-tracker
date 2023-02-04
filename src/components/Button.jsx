@@ -13,7 +13,7 @@ const Button = ({
         <>
           <button 
             onClick={onBtnClick} 
-            className="btn btn-dark"
+            className="btn btn-dark new-task-btn"
           >
             {buttonLabel}
           </button>

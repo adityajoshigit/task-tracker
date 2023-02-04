@@ -30,7 +30,7 @@ function App() {
                         <div className="col-10 col-sm-6 col-md-6 col-lg-4 App">
                             <div className='row'>
                                 <div 
-                                    className="col-12 d-flex flex-row justify-content-between section-container"
+                                    className="col-12 d-flex flex-row justify-content-center justify-content-sm-between section-container"
                                 >
                                     <Header title={headerTitle} />
                                     <FormToggle 
