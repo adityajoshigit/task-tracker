@@ -10,7 +10,7 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-.container {
+/* .container {
   max-width: 500px;
   margin: 30px auto;
   overflow: auto;
@@ -113,4 +113,12 @@ footer {
 
 .reminder-icon {
   margin-right: 0.25rem;
-}
+} */
+
+/* .app-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  align-items: center;
+} */

@@ -11,14 +11,16 @@ function App() {
     const [newTaskSwitch] = useState(true);
     return (
         <TaskContextProvider>
-            <div className="App">
-                <Header title={headerTitle} />
-                {
-                    newTaskSwitch && (
-                        <NewTask />
-                    )
-                }
-                <TaskList />
+            <div className='app-container'>
+                <div className="App">
+                    <Header title={headerTitle} />
+                    {
+                        newTaskSwitch && (
+                            <NewTask />
+                        )
+                    }
+                    <TaskList />
+                </div>
             </div>
         </TaskContextProvider>
         
