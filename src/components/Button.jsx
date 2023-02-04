@@ -1,19 +1,22 @@
 import PropTypes from 'prop-types';
 
 const Button = ({
+    defaultState,
     buttonLabel,
     onAddClick
 }) => {
     const onBtnClick = function () {
-      console.log('Add Clicked..');
       onAddClick();
     };
     
     return (
         <>
-            <button onClick={onBtnClick} className="btn">
-                {buttonLabel}
-            </button>
+          <button 
+            onClick={onBtnClick} 
+            className="btn"
+          >
+            {buttonLabel}
+          </button>
         </>
     )
 }

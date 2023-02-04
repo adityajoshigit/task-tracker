@@ -10,6 +10,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.App {
+  border: 1px solid steelblue;
+}
+
 /* .container {
   max-width: 500px;
   margin: 30px auto;
@@ -122,3 +126,4 @@ footer {
   align-self: center;
   align-items: center;
 } */
+
