@@ -10,13 +10,15 @@ const TaskList = () => {
     console.log(tasks);
     return (
         <div className='task-list-container'>
-            <ul>
+            <ul className='task-list'>
                 { tasks
                     .map(t => (
-                            <Task 
-                                key={t.id} 
-                                task={t}
-                            />
+                            <li
+                                key={t.id} >
+                                <Task 
+                                    task={t}
+                                />
+                            </li>
                         ) 
                     )
                 }

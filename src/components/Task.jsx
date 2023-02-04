@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { FaTimes, FaExchangeAlt, FaBell, FaBellSlash } from 'react-icons/fa';
-import { useState } from 'react';
+import { FaTimes, FaBell } from 'react-icons/fa';
+import { FcUndo, FcCheckmark } from 'react-icons/fc';
 import TaskContext from '../context/TaskContext';
 
 const Task = ({
@@ -11,11 +11,11 @@ const Task = ({
       handleUndelete,
       updateReminder
     } = useContext(TaskContext);
-  
-    const [reminderDisplay, setReminderDisplay] = useState(
-        ['none']
-    );
     
+    const onRemove = function () {
+        console.log('to remove' + task.id);
+    }
+
     let taskCss = {
         deletedTask: {
             textDecoration: 'line-through',
@@ -25,11 +25,14 @@ const Task = ({
 
     const reminderIcon = () => {
         return (
-            <span className='reminder-icon' style={ {display: reminderDisplay} }>
+            <span 
+                className='reminder-icon cursor-pointer' 
+                // style={ {display: reminderDisplay} }
+            >
                 { 
                     task.reminder 
-                    ? <FaBellSlash  onClick={ onResetReminder } />
-                    : <FaBell onClick={ onSetReminder } />
+                    ? <FaBell style={{color: 'green'}} onClick={ onResetReminder } />
+                    : <FaBell style={{color: 'grey'}} onClick={ onSetReminder } />
                 }
             </span>
         );
@@ -37,15 +40,26 @@ const Task = ({
 
     const showDeleteIcon = () => {
         return (
-            task.isDeleted 
-            ? <FaExchangeAlt 
-                onClick={onUndelete } 
-                style={{cursor: 'pointer'}} 
-                />
-            : <FaTimes 
-                onClick={onDelete } 
-                style={{cursor: 'pointer', color: 'red'}} 
-                />
+            <span className='cursor-pointer'>
+                {task.isDeleted 
+                ? <FcUndo 
+                    onClick={onUndelete } 
+                    />
+                : <FcCheckmark 
+                    onClick={onDelete } 
+                    />}
+            </span>
+        );
+    };
+
+    const showRemoveIcon = () => {
+        return (
+            <span className='cursor-pointer'>
+                <FaTimes 
+                    onClick={onRemove} 
+                    style={{color: 'red'}} 
+                    />
+            </span>
         );
     };
 
@@ -54,12 +68,6 @@ const Task = ({
             'task ' + ( task.reminder ? 'reminder' : '')
         );
     };
-
-    const toggleReminderBtn = (boolVal) => {
-        const val = boolVal ? 'block' : 'none';
-        setReminderDisplay(val);
-    };
-
     
     const onDelete = function () {
       handleDelete(task.id);
@@ -83,25 +91,33 @@ const Task = ({
         if (task) {
             taskData = ( 
                 <div 
-                    onMouseEnter={ () => toggleReminderBtn(true) }
-                    onMouseLeave={ () => toggleReminderBtn(false) }
-                    className={getTaskClassName()}>
+                    className={`${getTaskClassName()} row`}
+                >
                     
-                    <h3 
-                        className='task-desc'
+                    <span className='col-1 '>
+                        {reminderIcon()}
+                    </span>
+                    <div  
+                        className=" col-8 col-md-9"
                         style={ task.isDeleted ? taskCss.deletedTask : {} }
                     >
-                        <span style={{ display: 'inline-flex' }}>
-                            {reminderIcon()}
+                        <div 
+                            className='text-truncate task-desc'
+                            title={task.desc}
+                        >
                             {task.desc}
-                        </span>
+                        </div>
+                        
+                        <div className='task-dt'>
+                            {task.dt}
+                        </div>
+                    </div>
+                    <span className='col-1'>
                         {showDeleteIcon()}
-                    </h3>
-                    <p
-                        style={ task.isDeleted ? taskCss.deletedTask : {} }
-                    >
-                        {task.dt}
-                    </p>
+                    </span>
+                    <span className='col-1'>
+                        {showRemoveIcon()}
+                    </span>
                 </div>
             );
         }

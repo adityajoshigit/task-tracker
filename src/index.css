@@ -27,8 +27,18 @@ body {
 }
 
 .task-list-container {
-  max-height: 80vh;
+  max-height: 70vh;
   overflow-y: scroll;
+}
+
+.task.row {
+  margin: 0;
+  width: 100%;
+}
+
+.task-list {
+  padding: 0rem !important;
+  list-style-type: none;
 }
 
 .btn-primary {
@@ -41,6 +51,10 @@ body {
 
 .add-form > button {
   margin: 0.1rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 /* .container {
