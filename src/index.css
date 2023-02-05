@@ -33,7 +33,7 @@ body {
 }
 
 .task-list {
-  max-height: 60vh;
+  max-height: 40vh;
   overflow-y: scroll;
   padding: 0rem !important;
   list-style-type: none;
