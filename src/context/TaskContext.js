@@ -72,17 +72,17 @@ export const TaskContextProvider = ({
       });
   };
 
-  const compareTasks = (a, b) => {
-    if(a.isComplete && b.isComplete) {
-        return (a.id < b.id) ? -1 : 1;
-    } else if(a.isComplete && !b.isComplete) {
-        return 1;
-    } else if(!a.isComplete && b.isComplete) {
-        return -1;
-    } else {
-        return (a.id < b.id) ? -1 : 1;
-    }
-  };
+  // const compareTasks = (a, b) => {
+  //   if(a.isComplete && b.isComplete) {
+  //       return (a.id < b.id) ? -1 : 1;
+  //   } else if(a.isComplete && !b.isComplete) {
+  //       return 1;
+  //   } else if(!a.isComplete && b.isComplete) {
+  //       return -1;
+  //   } else {
+  //       return (a.id < b.id) ? -1 : 1;
+  //   }
+  // };
 
 
   return (
