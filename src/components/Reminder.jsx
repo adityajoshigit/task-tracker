@@ -22,20 +22,20 @@ function Reminder({
 
   return (
     <div className={`d-flex  reminder-container ${containerCssClassName}`}>
-      <select class="form-select" aria-label="hours">
+      <select className="form-select" aria-label="hours">
         {
           getHourOptions().map(h => {
             return (
-              <option label={h} value={h}>{h}</option>
+              <option key={h} label={h} value={h}>{h}</option>
             );
           })
         }
       </select>
-      <select class="form-select" aria-label="mins">
+      <select className="form-select" aria-label="mins">
         {
           getMinOptions().map(m => {
             return (
-              <option label={m} value={m}>{m}</option>
+              <option key={m} label={m} value={m}>{m}</option>
             );
           })
         }

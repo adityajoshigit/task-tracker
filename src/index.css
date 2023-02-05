@@ -57,6 +57,15 @@ body {
   cursor: pointer;
 }
 
+.no-display-text {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: lightgrey;
+  width: inherit;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
 @media (max-width: 576px) {
   .form-toggle-container {
     width: 100vw;

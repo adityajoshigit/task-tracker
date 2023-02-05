@@ -6,6 +6,7 @@ import Header from './components/Header';
 import { useState } from 'react';
 import NewTask from './components/NewTask';
 import FormToggle from './components/FormToggle';
+import NoTasksDisplay from './components/NoTasksDisplay';
 
 function App() {
     const headerTitle = 'Task Tracker';
@@ -26,7 +27,7 @@ function App() {
     return (
         <TaskContextProvider>
             <div className='parent-container container-fluid'>
-                <div class="app-container row d-flex justify-content-center">
+                <div className="app-container row d-flex justify-content-center">
                         <div className="col-10 col-sm-6 col-md-6 col-lg-4 App">
                             <div className='row'>
                                 <div 
@@ -38,6 +39,9 @@ function App() {
                                         toggleSwitchLabel={showForm?closeLabel:addNewLabel} 
                                         onAddClick={toggleNewTaskForm} 
                                     />
+                                </div>
+                                <div className='col-12 '>
+                                    <NoTasksDisplay />
                                 </div>
                                 <div className="col-12 section-container">
                                     {

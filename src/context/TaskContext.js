@@ -1,13 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import {
-    // isLive,
-    getTasks,
-    deleteTask,
-    undeleteTask,
-    toggleReminder,
-    postTask,
-    // clearTasks
-} from '../services/api';
+import controller from '../controller';
 
 const TaskContext = createContext();
 
@@ -20,57 +12,76 @@ export const TaskContextProvider = ({
 
   useEffect(() => {
     const getInitialData = async () => {
-        const res = await getTasks();
-        console.log(res);
-        setTasks(res);
+      const allTasks = await controller.getAll();
+      setTasks(allTasks);
     };
     getInitialData();
   }, []);
   
   
-  const handleDelete = async (evtObjId) => {
-    const res = await deleteTask(evtObjId);
-    if(res) {
-        const tasks = await getTasks();
-        setTasks(tasks.sort(compareTasks));
-    }
+  const handleRemove = async (evtObjId) => {
+    controller.removeTask(evtObjId)
+      .then(() => {
+        return controller.getAll();
+      })
+      .then((allTasks) => {
+        setTasks(allTasks);
+      })
+      .catch(err => {
+        setTasks([]);
+      });
   };
 
-  const handleUndelete = async (evtObjId) => {
-    const res = await undeleteTask(evtObjId);
-    if(res) {
-        const tasks = await getTasks();
-        setTasks(tasks.sort(compareTasks));
-    }
+  
+  const toggleCompletion = async (evtObjId) => {
+    controller.toggleTaskCompletion(evtObjId)
+      .then(() => {
+        return controller.getAll();
+      })
+      .then((allTasks) => {
+        setTasks(allTasks);
+      })
+      .catch(err => {
+        setTasks([]);
+      });
   };
 
   const handleAdd = async (newTask) => {
-    if (newTask) {
-        const res = await postTask(newTask);
-        if(res) {
-            const data = await getTasks();
-            setTasks(data);
-        }
-    }
+     controller.addTask(newTask)
+      .then(() => {
+        return controller.getAll();
+      })
+      .then((allTasks) => {
+        setTasks(allTasks);
+      })
+      .catch(err => {
+        setTasks([]);
+      });
   };
 
-    const updateReminder = async (taskId) => {
-        if (toggleReminder(taskId)) {
-            const res = await getTasks();
-            setTasks(res.sort(compareTasks));
-        }
-    };
+  const updateReminder = async (taskId) => {
+    controller.toggleTaskReminder(taskId)
+      .then(() => {
+        return controller.getAll();
+      })
+      .then((allTasks) => {
+        setTasks(allTasks);
+      })
+      .catch(err => {
+        setTasks([]);
+      });
+  };
 
   const compareTasks = (a, b) => {
-      if(a.isDeleted && b.isDeleted) {
-          return (a.id < b.id) ? -1 : 1;
-      } else if(a.isDeleted && !b.isDeleted) {
-          return 1;
-      } else if(!a.isDeleted && b.isDeleted) {
-          return -1;
-      } else {
-          return (a.id < b.id) ? -1 : 1;
-      }
+    if(a.isComplete && b.isComplete) {
+        return (a.id < b.id) ? -1 : 1;
+    } else if(a.isComplete && !b.isComplete) {
+        return 1;
+    } else if(!a.isComplete && b.isComplete) {
+        return -1;
+    } else {
+        return (a.id < b.id) ? -1 : 1;
+    }
   };
 
 
@@ -79,10 +90,10 @@ export const TaskContextProvider = ({
       {
         headerTitle,
         tasks,
-        handleDelete,
-        handleUndelete,
+        handleRemove,
         updateReminder,
-        handleAdd
+        handleAdd,
+        toggleCompletion
       }
     }>
       {children}

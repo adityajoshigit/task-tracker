@@ -19,7 +19,7 @@ function NewTask() {
         desc: taskDescription,
         dt: 'Feb 20th @ 7:00 PM',
         reminder: false,
-        isDeleted: false
+        isComplete: false
       });
       resetData();
     }

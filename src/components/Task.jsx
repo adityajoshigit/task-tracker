@@ -7,13 +7,13 @@ const Task = ({
     task
 }) => {
     const {
-      handleDelete,
-      handleUndelete,
-      updateReminder
+        handleRemove,
+        toggleCompletion,
+        updateReminder
     } = useContext(TaskContext);
     
     const onRemove = function () {
-        console.log('to remove' + task.id);
+        handleRemove(task.id);
     }
 
     let taskCss = {
@@ -31,7 +31,7 @@ const Task = ({
             >
                 { 
                     task.reminder 
-                    ? <FaBell style={{color: 'green'}} onClick={ onResetReminder } />
+                    ? <FaBell style={{color: !task.isComplete ? 'green' : 'grey'}} onClick={ onResetReminder } />
                     : <FaBell style={{color: 'grey'}} onClick={ onSetReminder } />
                 }
             </span>
@@ -41,12 +41,12 @@ const Task = ({
     const showDeleteIcon = () => {
         return (
             <span className='cursor-pointer'>
-                {task.isDeleted 
+                {task.isComplete 
                 ? <FcUndo 
-                    onClick={onUndelete } 
+                    onClick={onUndoCompletion } 
                     />
                 : <FcCheckmark 
-                    onClick={onDelete } 
+                    onClick={onComplete } 
                     />}
             </span>
         );
@@ -69,19 +69,21 @@ const Task = ({
         );
     };
     
-    const onDelete = function () {
-      handleDelete(task.id);
+    const onComplete = function () {
+        toggleCompletion(task.id);
     }
 
-    const onUndelete = function () {
-      handleUndelete(task.id);
+    const onUndoCompletion = function () {
+        toggleCompletion(task.id);
     }
     
     const onSetReminder = function () {
+        console.log('here--');
       updateReminder(task.id);
     }
     
     const onResetReminder = function () {
+        console.log('here1-');
         updateReminder(task.id);
     }
     
@@ -99,7 +101,7 @@ const Task = ({
                     </span>
                     <div  
                         className=" col-8 col-md-9"
-                        style={ task.isDeleted ? taskCss.deletedTask : {} }
+                        style={ task.isComplete ? taskCss.deletedTask : {} }
                     >
                         <div 
                             className='text-truncate task-desc'
