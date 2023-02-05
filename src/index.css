@@ -26,12 +26,10 @@ body {
   padding: 0.25rem;
 }
 
-.task-list-container {
-  max-height: 60vh;
-  overflow-y: scroll;
-}
 
 .task.row {
+  max-height: 60vh;
+  overflow-y: scroll;
   margin: 0;
   width: 95%;
 }
