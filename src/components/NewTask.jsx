@@ -22,7 +22,7 @@ function NewTask() {
     if (taskDescription) {
       handleAdd({
         desc: taskDescription,
-        dt: `Today @ ${('0'+hours).substring(1,3)}:${('0'+mins).substring(1,3)}`,
+        dt: `Today @ ${hours<10?('0'+hours):hours}:${mins<10?('0'+mins):mins}`,
         reminder: false,
         isComplete: false
       });
