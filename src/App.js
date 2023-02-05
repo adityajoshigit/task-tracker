@@ -40,15 +40,15 @@ function App() {
                                         onAddClick={toggleNewTaskForm} 
                                     />
                                 </div>
-                                <div className='col-12 '>
-                                    <NoTasksDisplay />
-                                </div>
                                 <div className="col-12 section-container">
                                     {
                                         showForm && (
                                             <NewTask />
                                         )
                                     }
+                                </div>
+                                <div className='col-12 '>
+                                    <NoTasksDisplay />
                                 </div>
                                 <div className="col-12 section-container">
                                     <TaskList />
