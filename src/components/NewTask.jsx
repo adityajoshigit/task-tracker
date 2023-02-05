@@ -47,7 +47,7 @@ function NewTask() {
   }
 
   return (
-    <div className='d-flex flex-column flex-sm-row align-items-stretch justify-content-between  add-form'>
+    <div className='d-flex flex-column align-items-stretch justify-content-between  add-form'>
         <input 
           className='flex-sm-grow-1 flex-lg-grow-0'
           type="text" 
