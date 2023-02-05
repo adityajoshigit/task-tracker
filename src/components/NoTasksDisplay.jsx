@@ -5,7 +5,6 @@ function NoTasksDisplay() {
   const { tasks } = useContext(TaskContext);
   
   useEffect(() => {
-    console.log('tasks updated');
     setNoTasksFlag(tasks.length?true:false);
   }, [tasks]);
 

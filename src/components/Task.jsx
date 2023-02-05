@@ -78,12 +78,10 @@ const Task = ({
     }
     
     const onSetReminder = function () {
-        console.log('here--');
       updateReminder(task.id);
     }
     
     const onResetReminder = function () {
-        console.log('here1-');
         updateReminder(task.id);
     }
     

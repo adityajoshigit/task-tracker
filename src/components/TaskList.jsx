@@ -7,7 +7,6 @@ const TaskList = () => {
     const {
       tasks
     } = useContext(TaskContext);
-    console.log(tasks);
     return (
         <div className='task-list-container'>
             <ul className='task-list'>

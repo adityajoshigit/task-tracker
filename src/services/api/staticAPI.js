@@ -4,7 +4,6 @@ const getAll = async function () {
   return new Promise(
     resolve => {
       const data = localStorage.getItem('tasks');
-      console.log(JSON.parse(data));
       resolve(data ? JSON.parse(data) : []);
     }
   );
@@ -69,12 +68,10 @@ const toggleTaskCompletion = async function(taskId) {
   });
 };
 const removeTask = async function(taskId) {
-  console.log('here ---' + taskId);
   return new Promise((resolve) => {
     getAll()
       .then(data => {
         data = data.filter(item => {
-          console.log(item.id + ' = ' + taskId);
           return (item.id !== taskId);
         });
         localStorage.setItem('tasks', JSON.stringify(data));

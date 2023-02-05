@@ -81,8 +81,6 @@ export const TaskContextProvider = ({
           return new Promise(resolve => {
             resolve(
               allTasks.filter(task => {
-                console.log(task);
-                console.log(query);
                 return task.desc.toLowerCase().search(query.toLowerCase()) !== -1;
               })
             );

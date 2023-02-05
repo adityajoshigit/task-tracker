@@ -7,7 +7,12 @@ function NewTask() {
     handleAdd
   } = useContext(TaskContext);
 
+  const currentDate = new Date();
+  const defaultHrs = currentDate.getHours() + 1;
+  const defaultMins = 0;
   const [taskDescription, setTaskDescription] = useState('');
+  const [hours, setHours] = useState(defaultHrs);
+  const [mins, setMins] = useState(defaultMins);
 
   const clickHandler = function () {
     sendData();
@@ -17,7 +22,7 @@ function NewTask() {
     if (taskDescription) {
       handleAdd({
         desc: taskDescription,
-        dt: 'Feb 20th @ 7:00 PM',
+        dt: `Today @ ${('0'+hours).substring(1,3)}:${('0'+mins).substring(1,3)}`,
         reminder: false,
         isComplete: false
       });
@@ -33,6 +38,14 @@ function NewTask() {
     setTaskDescription(e.target.value);
   }
 
+  const onHourSelection = function (event) {
+    setHours(event.target.value);
+  }
+
+  const onMinSelection = function (event) {
+    setMins(event.target.value);
+  }
+
   return (
     <div className='d-flex flex-column flex-sm-row align-items-stretch justify-content-between  add-form'>
         <input 
@@ -44,7 +57,14 @@ function NewTask() {
           onChange={onDescChange}
           value={taskDescription || ''}
         />
-        <Reminder />
+        <Reminder 
+          onHourSelection={onHourSelection} 
+          onMinSelection={onMinSelection}
+          // defaultHours={`${hours}`}
+          // defaultMins={`${mins}`}
+          defaultHours={defaultHrs}
+          defaultMins={defaultMins}
+        />
         <button type="button" className='btn btn-primary' onClick={clickHandler}>
           Add
         </button>
