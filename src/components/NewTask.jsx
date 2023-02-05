@@ -42,6 +42,7 @@ function NewTask() {
           id="taskDesc" 
           placeholder='Task To Do..'
           onChange={onDescChange}
+          value={taskDescription || ''}
         />
         <Reminder />
         <button type="button" className='btn btn-primary' onClick={clickHandler}>
