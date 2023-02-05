@@ -8,7 +8,7 @@ function NewTask() {
   } = useContext(TaskContext);
 
   const currentDate = new Date();
-  const defaultHrs = currentDate.getHours() + 1;
+  const defaultHrs = currentDate.getHours();
   const defaultMins = 0;
   const [taskDescription, setTaskDescription] = useState('');
   const [hours, setHours] = useState(defaultHrs);
