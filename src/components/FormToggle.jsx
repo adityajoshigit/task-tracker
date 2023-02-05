@@ -6,7 +6,7 @@ function FormToggle({
   toggleSwitchLabel
 }) {
   return (
-    <div className="form-toggle-container">
+    <div className="d-flex form-toggle-container">
       <Button 
         defaultState={defaultState} 
         buttonLabel={toggleSwitchLabel} 

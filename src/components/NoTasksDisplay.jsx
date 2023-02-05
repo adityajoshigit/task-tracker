@@ -15,7 +15,7 @@ function NoTasksDisplay() {
       ? <></>
       : (
         <div className='d-flex flex-row justify-content-center no-display-text'>
-          No Tasks.. Click + button to add more.
+          No Tasks.. Click Add button to add more.
         </div>
       )
   )

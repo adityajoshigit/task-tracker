@@ -12,8 +12,8 @@ import Search from './components/Search';
 
 function App() {
     const headerTitle = 'Task Tracker';
-    const addNewLabel = '+';
-    const closeLabel = 'X';
+    const addNewLabel = 'Add';
+    const closeLabel = 'Close Panel';
     const defaultStateFormShow = false;
     const defaultStateSearchBarShow = false;
 

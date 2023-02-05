@@ -94,10 +94,12 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
+    min-height: 10vh;
   }
 
   .new-task-btn {
     width: 100%;
+    font-size: large;
   }
 
 }
