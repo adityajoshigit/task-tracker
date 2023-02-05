@@ -53,6 +53,10 @@ body {
   margin: 0.1rem;
 }
 
+.search-input {
+  width: 100%;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

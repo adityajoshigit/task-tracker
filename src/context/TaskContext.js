@@ -72,6 +72,34 @@ export const TaskContextProvider = ({
       });
   };
 
+  const searchTasks = async function (query) {
+    if (query === '') {
+      resetTasks();
+    } else {
+      controller.getAll()
+        .then(allTasks => {
+          return new Promise(resolve => {
+            resolve(
+              allTasks.filter(task => {
+                console.log(task);
+                console.log(query);
+                return task.desc.toLowerCase().search(query.toLowerCase()) !== -1;
+              })
+            );
+          });
+        })
+        .then(result => {
+          setTasks(result || []);
+        });
+    }
+  }
+
+  const resetTasks = async function () {
+    setTasks(
+      await controller.getAll()
+    );
+  }
+
   // const compareTasks = (a, b) => {
   //   if(a.isComplete && b.isComplete) {
   //       return (a.id < b.id) ? -1 : 1;
@@ -93,7 +121,8 @@ export const TaskContextProvider = ({
         handleRemove,
         updateReminder,
         handleAdd,
-        toggleCompletion
+        toggleCompletion,
+        searchTasks
       }
     }>
       {children}

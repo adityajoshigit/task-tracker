@@ -7,14 +7,18 @@ import { useState } from 'react';
 import NewTask from './components/NewTask';
 import FormToggle from './components/FormToggle';
 import NoTasksDisplay from './components/NoTasksDisplay';
+import SearchToggle from './components/SearchToggle';
+import Search from './components/Search';
 
 function App() {
     const headerTitle = 'Task Tracker';
     const addNewLabel = '+';
     const closeLabel = 'X';
     const defaultStateFormShow = false;
+    const defaultStateSearchBarShow = false;
 
     const [showForm, setShowForm] = useState(defaultStateFormShow);
+    const [showSearchBar, setShowSearchBar] = useState(defaultStateSearchBarShow);
 
     const toggleNewTaskForm = function () {
         console.log(showForm);
@@ -39,6 +43,11 @@ function App() {
                                         toggleSwitchLabel={showForm?closeLabel:addNewLabel} 
                                         onAddClick={toggleNewTaskForm} 
                                     />
+                                    <SearchToggle 
+                                        onSearchToggleClick={
+                                            () => setShowSearchBar(prevVal => !prevVal)
+                                        }
+                                    />
                                 </div>
                                 <div className="col-12 section-container">
                                     {
@@ -47,7 +56,14 @@ function App() {
                                         )
                                     }
                                 </div>
-                                <div className='col-12 '>
+                                <div className="col-12 section-container">
+                                    {
+                                        showSearchBar && (
+                                            <Search />
+                                        )
+                                    }
+                                </div>
+                                <div className='col-12 section-container'>
                                     <NoTasksDisplay />
                                 </div>
                                 <div className="col-12 section-container">
