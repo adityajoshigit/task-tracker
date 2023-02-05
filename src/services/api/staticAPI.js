@@ -69,10 +69,14 @@ const toggleTaskCompletion = async function(taskId) {
   });
 };
 const removeTask = async function(taskId) {
+  console.log('here ---' + taskId);
   return new Promise((resolve) => {
     getAll()
       .then(data => {
-        data = data.filter(item => item.id ===  taskId);
+        data = data.filter(item => {
+          console.log(item.id + ' = ' + taskId);
+          return (item.id !== taskId);
+        });
         localStorage.setItem('tasks', JSON.stringify(data));
         resolve(true);
       })
