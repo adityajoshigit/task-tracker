@@ -1,12 +1,12 @@
 const googleSSODetails = {
   web:
   {
-    client_id:"156590472230-b4s8upj3qoalcpt49brlokkajd417m5e.apps.googleusercontent.com",
-    project_id:"teak-amphora-376918",
+    client_id:"-ontm",
+    project_id:"",
     auth_uri:"https://accounts.google.com/o/oauth2/auth",
     token_uri:"https://oauth2.googleapis.com/token",
     auth_provider_x509_cert_url:"https://www.googleapis.com/oauth2/v1/certs",
-    client_secret:"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",
+    client_secret:"-",
     redirect_uris:[
       "http://localhost",
       "http://localhost:3000"
