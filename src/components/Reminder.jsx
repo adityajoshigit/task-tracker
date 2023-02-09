@@ -1,33 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import TaskContext from '../context/TaskContext';
 
 function Reminder({
-  containerCssClassName,
-  onTimeSelection
+  containerCssClassName
 }) {
+  const {
+    hours, 
+    mins,
+    getOptions,
+    setHours,
+    setMins
+  } = useContext(TaskContext);
+  // const getOptions = function(start, end, endInclusive, stepBy) {
+  //   let ops = [];
+  //   for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
+  //     ops.push(index);
+  //   }
+  //   return ops;
+  // }
 
-  const getOptions = function(start, end, endInclusive, stepBy) {
-    let ops = [];
-    for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
-      ops.push(index);
-    }
-    return ops;
-  }
+  // const getCurrentInstant = function () {
+  //   const thisMoment = new Date();
+  //   return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
+  // }
 
-  const getCurrentInstant = function () {
-    const thisMoment = new Date();
-    return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
-  }
+  // const getNextInstant = function ([hh, mm]) {
+  //   return [(hh === 23) ? 23 : (hh), (mm === 59) ? 0 : (mm + 1)];
+  // }
 
-  const getNextInstant = function ([hh, mm]) {
-    return [(hh === 23) ? 23 : (hh), (mm === 59) ? 0 : (mm + 1)];
-  }
+  // const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
 
-  const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
-
-  const [selectedHours, setSelHours] = useState(nextHr);
-  const [selectedMins, setSelMins] = useState(nextMin);
-  const [hourOptions] = useState(getOptions(nextHr, 24, false, 1));
-  const [minOptions, setMinOptions] = useState(getOptions(nextMin, 60, false, 1));
+  // const [selectedHours, setSelHours] = useState(nextHr);
+  // const [selectedMins, setSelMins] = useState(nextMin);
+  const [hourOptions] = useState(getOptions(hours, 24, false, 1));
+  const [minOptions, setMinOptions] = useState(getOptions(mins, 60, false, 1));
   
   const updateMinOptions = function (hourValue) {
     const thisMoment = new Date();
@@ -48,11 +54,11 @@ function Reminder({
         onChange={
           (event) => {
             const selectedValue = event.target.value;
-            setSelHours(selectedValue);
+            setHours(selectedValue);
             updateMinOptions(selectedValue);
           }
         }
-        value={selectedHours || hourOptions[0]}
+        value={hours || hourOptions[0]}
         size='1'
       >
         {
@@ -71,11 +77,10 @@ function Reminder({
         onChange={
           (event) => {
             const selectedValue = event.target.value;
-            setSelMins(selectedValue);
-            onTimeSelection([selectedHours, selectedMins]);
+            setMins(selectedValue);
           }
         } 
-        value={minOptions[0]}
+        value={mins || minOptions[0]}
         size='1'
       >
         {

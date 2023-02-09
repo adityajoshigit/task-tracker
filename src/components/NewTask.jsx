@@ -4,12 +4,12 @@ import Reminder from './Reminder';
 
 function NewTask() {
   const {
+    hours, 
+    mins,
     handleAdd
   } = useContext(TaskContext);
 
   const [taskDescription, setTaskDescription] = useState('');
-  let hours;
-  let mins;
   const clickHandler = function () {
     sendData();
   }
@@ -34,11 +34,6 @@ function NewTask() {
     setTaskDescription(e.target.value);
   }
 
-  const setReminderTime = function ([hh, mm]) {
-    hours = hh;
-    mins = mm;
-  }
-
   return (
     <div className='d-flex flex-column align-items-stretch justify-content-between  add-form'>
         <input 
@@ -51,7 +46,6 @@ function NewTask() {
           value={taskDescription || ''}
         />
         <Reminder 
-          onTimeSelection={setReminderTime}
         />
         <button type="button" className='btn btn-primary' onClick={clickHandler}>
           Add

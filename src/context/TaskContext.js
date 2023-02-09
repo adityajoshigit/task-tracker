@@ -6,9 +6,35 @@ const TaskContext = createContext();
 export const TaskContextProvider = ({
   children
 }) => {
-  const [headerTitle] = 'Task Tracker';
+  const getOptions = function(start, end, endInclusive, stepBy) {
+    let ops = [];
+    for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
+      ops.push(index);
+    }
+    return ops;
+  }
+
+  const getCurrentInstant = function () {
+    const thisMoment = new Date();
+    return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
+  }
+
+  const getNextInstant = function ([hh, mm]) {
+    if(hh !== 23 && mm === 59) {
+      return [hh + 1, 0];
+    }
+    return [hh , (mm + 1)];
+  }
+
+  const headerTitle = 'Task Tracker';
+  const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
     
   const [tasks, setTasks] = useState([]);
+  const [hours, setHours] = useState(nextHr);
+  const [mins, setMins] = useState(nextMin);
+
+  
+
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -116,11 +142,16 @@ export const TaskContextProvider = ({
       {
         headerTitle,
         tasks,
+        hours,
+        mins,
         handleRemove,
         updateReminder,
         handleAdd,
         toggleCompletion,
-        searchTasks
+        searchTasks,
+        setHours,
+        setMins,
+        getOptions
       }
     }>
       {children}
