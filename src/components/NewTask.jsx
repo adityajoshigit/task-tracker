@@ -7,13 +7,9 @@ function NewTask() {
     handleAdd
   } = useContext(TaskContext);
 
-  const currentDate = new Date();
-  const defaultHrs = currentDate.getHours();
-  const defaultMins = 0;
   const [taskDescription, setTaskDescription] = useState('');
-  const [hours, setHours] = useState(defaultHrs);
-  const [mins, setMins] = useState(defaultMins);
-
+  let hours;
+  let mins;
   const clickHandler = function () {
     sendData();
   }
@@ -38,12 +34,9 @@ function NewTask() {
     setTaskDescription(e.target.value);
   }
 
-  const onHourSelection = function (event) {
-    setHours(event.target.value);
-  }
-
-  const onMinSelection = function (event) {
-    setMins(event.target.value);
+  const setReminderTime = function ([hh, mm]) {
+    hours = hh;
+    mins = mm;
   }
 
   return (
@@ -58,12 +51,7 @@ function NewTask() {
           value={taskDescription || ''}
         />
         <Reminder 
-          onHourSelection={onHourSelection} 
-          onMinSelection={onMinSelection}
-          // defaultHours={`${hours}`}
-          // defaultMins={`${mins}`}
-          defaultHours={defaultHrs}
-          defaultMins={defaultMins}
+          onTimeSelection={setReminderTime}
         />
         <button type="button" className='btn btn-primary' onClick={clickHandler}>
           Add

@@ -2,29 +2,43 @@ import React, { useState } from 'react'
 
 function Reminder({
   containerCssClassName,
-  onHourSelection,
-  onMinSelection,
-  defaultHours,
-  defaultMins
+  onTimeSelection
 }) {
-  const [selectedHours, setSelHours] = useState(defaultHours);
-  const [selectedMins, setSelMins] = useState(defaultMins);
-  const getHourOptions = function () {
+
+  const getOptions = function(start, end, endInclusive, stepBy) {
     let ops = [];
-    for (let index = (defaultHours || 0); index <= 23; index++) {
+    for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
       ops.push(index);
     }
     return ops;
   }
 
-  const getMinOptions = function () {
-    let ops = [];
-    for (let index = (defaultMins || 0); index <= 59; index+=1) {
-      ops.push(index);
-    }
-    return ops;
+  const getCurrentInstant = function () {
+    const thisMoment = new Date();
+    return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
   }
 
+  const getNextInstant = function ([hh, mm]) {
+    return [(hh === 23) ? 23 : (hh), (mm === 59) ? 0 : (mm + 1)];
+  }
+
+  const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
+
+  const [selectedHours, setSelHours] = useState(nextHr);
+  const [selectedMins, setSelMins] = useState(nextMin);
+  const [hourOptions] = useState(getOptions(nextHr, 24, false, 1));
+  const [minOptions, setMinOptions] = useState(getOptions(nextMin, 60, false, 1));
+  
+  const updateMinOptions = function (hourValue) {
+    const thisMoment = new Date();
+    const opts = getOptions( parseInt(hourValue) === thisMoment.getHours() ? thisMoment.getMinutes() + 1 : 0, 60, false, 1);
+    console.log(opts);
+    setMinOptions(
+      opts
+    );
+  }
+
+  
 
   return (
     <div className={`d-flex  reminder-container ${containerCssClassName}`}>
@@ -33,15 +47,16 @@ function Reminder({
         aria-label="hours" 
         onChange={
           (event) => {
-            setSelHours(event.target.value);
-            onHourSelection(event);
+            const selectedValue = event.target.value;
+            setSelHours(selectedValue);
+            updateMinOptions(selectedValue);
           }
         }
-        value={(selectedHours || '00')}
+        value={selectedHours || hourOptions[0]}
         size='1'
       >
         {
-          getHourOptions().map(h => {
+          hourOptions.map(h => {
             return (
               <option key={h} value={h} >
                 {h < 10 ? `0${h}` : h}
@@ -55,15 +70,16 @@ function Reminder({
         aria-label="mins" 
         onChange={
           (event) => {
-            setSelMins(event.target.value);
-            onMinSelection(event);
+            const selectedValue = event.target.value;
+            setSelMins(selectedValue);
+            onTimeSelection([selectedHours, selectedMins]);
           }
         } 
-        value={(selectedMins || '00')}
+        value={minOptions[0]}
         size='1'
       >
         {
-          getMinOptions().map(m => {
+          minOptions.map(m => {
             return (
               <option key={m} value={m}>
                 {m < 10 ? `0${m}` : m}
