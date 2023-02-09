@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import { getOptions, getCurrentInstant, getNextInstant } from '../services/util/misc';
+import React, { useState, useContext, useEffect } from 'react'
 import TaskContext from '../context/TaskContext';
 
 function Reminder({
@@ -7,7 +8,6 @@ function Reminder({
   const {
     hours, 
     mins,
-    getOptions,
     setHours,
     setMins
   } = useContext(TaskContext);
@@ -32,9 +32,27 @@ function Reminder({
 
   // const [selectedHours, setSelHours] = useState(nextHr);
   // const [selectedMins, setSelMins] = useState(nextMin);
-  const [hourOptions] = useState(getOptions(hours, 24, false, 1));
-  const [minOptions, setMinOptions] = useState(getOptions(mins, 60, false, 1));
+  const [hourOptions, setHourOptions] = useState([]);
+  const [minOptions, setMinOptions] = useState([]);
   
+  const setInitValues = function ([hh, mm]) {
+    setHours(hh);
+    setMins(mm);
+  }
+
+  useEffect(
+    () => {
+      const initialize = function () { 
+        const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
+        setInitValues([nextHr, nextMin]);
+        setHourOptions(getOptions(nextHr, 24, false, 1));
+        setMinOptions(getOptions(nextMin, 60, false, 1));
+      }
+      initialize();
+    },
+    []
+  );
+
   const updateMinOptions = function (hourValue) {
     const thisMoment = new Date();
     const opts = getOptions( parseInt(hourValue) === thisMoment.getHours() ? thisMoment.getMinutes() + 1 : 0, 60, false, 1);

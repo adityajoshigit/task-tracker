@@ -14,24 +14,25 @@ export const TaskContextProvider = ({
     return ops;
   }
 
-  const getCurrentInstant = function () {
-    const thisMoment = new Date();
-    return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
-  }
+  // const getCurrentInstant = function () {
+  //   const thisMoment = new Date();
+  //   return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
+  // }
 
-  const getNextInstant = function ([hh, mm]) {
-    if(hh !== 23 && mm === 59) {
-      return [hh + 1, 0];
-    }
-    return [hh , (mm + 1)];
-  }
+  // const getNextInstant = function ([hh, mm]) {
+  //   if(hh !== 23 && mm === 59) {
+  //     return [hh + 1, 0];
+  //   }
+  //   return [hh , (mm + 1)];
+  // }
 
-  const headerTitle = 'Task Tracker';
-  const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
+  // const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
     
+  const headerTitle = 'Task Tracker';
+
   const [tasks, setTasks] = useState([]);
-  const [hours, setHours] = useState(nextHr);
-  const [mins, setMins] = useState(nextMin);
+  const [hours, setHours] = useState();
+  const [mins, setMins] = useState();
 
   
 
