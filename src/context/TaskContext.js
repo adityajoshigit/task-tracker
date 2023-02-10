@@ -6,36 +6,20 @@ const TaskContext = createContext();
 export const TaskContextProvider = ({
   children
 }) => {
-  const getOptions = function(start, end, endInclusive, stepBy) {
-    let ops = [];
-    for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
-      ops.push(index);
-    }
-    return ops;
-  }
+  // let today = new Date().getMinutes();
+  // setInterval(
+  //   () => {
+  //     console.log(today);
+  //     today = new Date().getMinutes();
+  //   },
+  //   6000
+  // )
 
-  // const getCurrentInstant = function () {
-  //   const thisMoment = new Date();
-  //   return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
-  // }
-
-  // const getNextInstant = function ([hh, mm]) {
-  //   if(hh !== 23 && mm === 59) {
-  //     return [hh + 1, 0];
-  //   }
-  //   return [hh , (mm + 1)];
-  // }
-
-  // const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
-    
   const headerTitle = 'Task Tracker';
 
   const [tasks, setTasks] = useState([]);
   const [hours, setHours] = useState();
   const [mins, setMins] = useState();
-
-  
-
 
   useEffect(() => {
     const getInitialData = async () => {
@@ -45,6 +29,7 @@ export const TaskContextProvider = ({
     getInitialData();
   }, []);
   
+
   
   const handleRemove = async (evtObjId) => {
     controller.removeTask(evtObjId)
@@ -152,7 +137,6 @@ export const TaskContextProvider = ({
         searchTasks,
         setHours,
         setMins,
-        getOptions
       }
     }>
       {children}

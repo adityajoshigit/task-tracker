@@ -11,52 +11,28 @@ function Reminder({
     setHours,
     setMins
   } = useContext(TaskContext);
-  // const getOptions = function(start, end, endInclusive, stepBy) {
-  //   let ops = [];
-  //   for (let index = start; endInclusive ? (index <= end) : index < end; index+=stepBy) {
-  //     ops.push(index);
-  //   }
-  //   return ops;
-  // }
 
-  // const getCurrentInstant = function () {
-  //   const thisMoment = new Date();
-  //   return [thisMoment.getHours(), thisMoment.getMinutes(), thisMoment.getSeconds()];
-  // }
-
-  // const getNextInstant = function ([hh, mm]) {
-  //   return [(hh === 23) ? 23 : (hh), (mm === 59) ? 0 : (mm + 1)];
-  // }
-
-  // const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
-
-  // const [selectedHours, setSelHours] = useState(nextHr);
-  // const [selectedMins, setSelMins] = useState(nextMin);
   const [hourOptions, setHourOptions] = useState([]);
   const [minOptions, setMinOptions] = useState([]);
-  
-  const setInitValues = function ([hh, mm]) {
-    setHours(hh);
-    setMins(mm);
-  }
 
-  useEffect(
-    () => {
-      const initialize = function () { 
-        const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
-        setInitValues([nextHr, nextMin]);
-        setHourOptions(getOptions(nextHr, 24, false, 1));
-        setMinOptions(getOptions(nextMin, 60, false, 1));
-      }
-      initialize();
-    },
-    []
-  );
+  const initialize = () => { 
+      const [nextHr, nextMin] = getNextInstant(getCurrentInstant());
+      setHours(nextHr);
+      setMins(nextMin);
+      setHourOptions(getOptions(nextHr, 24, false, 1));
+      setMinOptions(getOptions(nextMin, 60, false, 1));
+  
+      console.log('a');
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
 
   const updateMinOptions = function (hourValue) {
     const thisMoment = new Date();
     const opts = getOptions( parseInt(hourValue) === thisMoment.getHours() ? thisMoment.getMinutes() + 1 : 0, 60, false, 1);
-    console.log(opts);
+    // console.log(opts);
     setMinOptions(
       opts
     );
