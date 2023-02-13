@@ -1,6 +1,7 @@
 import { getUID } from "../util/uid";
+import { sendEmail } from '../util/misc';
 
-const getAll = async function () {
+const getAll = async function() {
   return new Promise(
     resolve => {
       const data = localStorage.getItem('tasks');
@@ -8,7 +9,7 @@ const getAll = async function () {
     }
   );
 };
-const addTask = async function (newTask) {
+const addTask = async function(newTask) {
   return new Promise((resolve) => {
     getAll()
       .then(data => {
@@ -20,7 +21,7 @@ const addTask = async function (newTask) {
       .catch(err => resolve(null));
   });
 };
-const getTask = async function (taskId) {
+const getTask = async function(taskId) {
   return new Promise(
     resolve => {
       let data = localStorage.getItem('tasks');
@@ -34,20 +35,26 @@ const getTask = async function (taskId) {
   );
 };
 const toggleTaskReminder = async function(taskId) {
+  const result = await sendEmail();
   return new Promise((resolve) => {
-    getAll()
-      .then(data => {
-        data = data
-                .map(item => {
-                  return {
-                    ...item,
-                    reminder: (((item.id ===  taskId) && !item.isComplete) ? !item.reminder : item.reminder)
-                  };
-                });
-        localStorage.setItem('tasks', JSON.stringify(data));
-        resolve(true);
-      })
-      .catch(err => resolve(false));
+    if (result && result.status) {
+      getAll()
+        .then(data => {
+          data = data
+            .map(item => {
+              return {
+                ...item,
+                reminder: (((item.id === taskId) && !item.isComplete) ? !item.reminder : item.reminder)
+              };
+            });
+          localStorage.setItem('tasks', JSON.stringify(data));
+          resolve(true);
+        })
+        .catch(err => resolve(false));
+
+    } else {
+      resolve(false);
+    }
   });
 };
 const toggleTaskCompletion = async function(taskId) {
@@ -55,12 +62,12 @@ const toggleTaskCompletion = async function(taskId) {
     getAll()
       .then(data => {
         data = data
-                .map(item => {
-                  return {
-                    ...item,
-                    isComplete: ((item.id ===  taskId) ? !item.isComplete : item.isComplete)
-                  };
-                });
+          .map(item => {
+            return {
+              ...item,
+              isComplete: ((item.id === taskId) ? !item.isComplete : item.isComplete)
+            };
+          });
         localStorage.setItem('tasks', JSON.stringify(data));
         resolve(true);
       })
